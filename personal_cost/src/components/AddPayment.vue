@@ -84,11 +84,13 @@ methods: {
     input:not(:last-child){
       margin-bottom: 10px;
     } 
-    button:not(:last-child){
-      margin-bottom: 10px;
+    button{
       background: darkturquoise;
       border: none;
       color: white;
+    }
+    button:not(:last-child){
+      margin-bottom: 10px;
     }
 }
 </style>
