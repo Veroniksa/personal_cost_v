@@ -69,11 +69,8 @@ methods: {
     border-radius: 15px;
     .btnToggle{
       button{
-        background: darkturquoise;
-        color: white;
         padding: 10px;
         margin: 20px;
-        border: none;
       }
     }
 }
@@ -84,11 +81,6 @@ methods: {
     input:not(:last-child){
       margin-bottom: 10px;
     } 
-    button{
-      background: darkturquoise;
-      border: none;
-      color: white;
-    }
     button:not(:last-child){
       margin-bottom: 10px;
     }

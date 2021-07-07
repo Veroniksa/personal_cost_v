@@ -80,10 +80,10 @@ export default {
    45deg, white, transparent);
   }
   button{
-    border: 0.5px solid black;
     border-radius: 5px;
+    background: darkturquoise;
+    color: white;
+    border: none;
   }
-
-  
 }
 </style>
