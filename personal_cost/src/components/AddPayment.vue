@@ -1,17 +1,19 @@
 <template>
-    <div>
-        <div>
+    <div :class="[$style.addPaym]">
+        <div :class="[$style.btnToggle]">
             <button @click="toggle">ADD NEW COST +</button>
         </div>
-        <div v-show="show">
-        <input v-model="date" placeholder="date"/>
-        <input v-model="category" placeholder="category"/>
-        <input v-model.number="value" type="number" placeholder="value"/>
-        <button @click="onClick">
-            Add Data
-        </button>
-    </div>
-    
+        <div v-show="show" :class="[$style.addDate]">
+          <input v-model="date" placeholder="date"/>
+          <input v-model="category" placeholder="category"/>
+          <input v-model.number="value" type="number" placeholder="value"/>
+          <button @click="onClick">
+            ADD +
+          </button>
+          <button @click="cancell">
+            Cancell
+          </button>
+        </div>
     </div>
 </template>
 
@@ -27,6 +29,11 @@ export default {
       }
   },
 methods: {
+    cancell(){
+        this.date = '',
+        this.category = '',
+        this.value = null
+    },
     toggle () {
         this.show = !this.show
     },
@@ -53,3 +60,32 @@ methods: {
     }
 }
 </script>
+
+<style lang="scss" module>
+.addPaym{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 15px;
+    .btnToggle{
+      button{
+        background: darkturquoise;
+        color: white;
+        padding: 10px;
+        margin: 20px;
+        border: none;
+      }
+    }
+}
+.addDate{
+    display: flex;
+    flex-direction: column;
+
+    input:not(:last-child){
+      margin-bottom: 10px;
+    } 
+    button:not(:last-child){
+      margin-bottom: 10px
+    }
+}
+</style>

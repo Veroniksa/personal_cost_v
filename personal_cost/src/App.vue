@@ -68,6 +68,22 @@ export default {
   margin-top: 60px;
 }
 .wrapper {
-  background: blue;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 20px;
+  background: skyblue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  header{
+    background: linear-gradient(
+   45deg, white, transparent);
+  }
+  button{
+    border: 0.5px solid black;
+    border-radius: 5px;
+  }
+
+  
 }
 </style>
