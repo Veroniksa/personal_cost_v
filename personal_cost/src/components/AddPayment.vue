@@ -85,7 +85,10 @@ methods: {
       margin-bottom: 10px;
     } 
     button:not(:last-child){
-      margin-bottom: 10px
+      margin-bottom: 10px;
+      background: darkturquoise;
+      border: none;
+      color: white;
     }
 }
 </style>
