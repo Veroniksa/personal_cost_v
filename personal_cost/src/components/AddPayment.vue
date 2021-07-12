@@ -5,7 +5,14 @@
         </div>
         <div v-show="show" :class="[$style.addDate]">
           <input v-model="date" placeholder="date"/>
-          <input v-model="category" placeholder="category"/>
+          <div :class="[$style.addDate]">
+            <select v-model="selected">
+              <option v-for="(option, idx) in getCategoryList" 
+              :key="idx" :value="option">
+                {{option}}
+              </option>
+            </select>
+          </div>
           <input v-model.number="value" type="number" placeholder="value"/>
           <button @click="onClick">
             ADD +
@@ -18,6 +25,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters  } from 'vuex'
 export default {
   name: "AddPayment",
   data() {
@@ -25,7 +33,8 @@ export default {
           date: '',
           category: '',
           value: null,
-          show: false
+          show: false,
+          selected: ''
       }
   },
 methods: {
@@ -38,17 +47,25 @@ methods: {
         this.show = !this.show
     },
         onClick(){
-            const { category, value } = this
+            const { value } = this
             const data = {
                 date: this.date || this.getCurrentDate,
-                category,
+                category: this.selected,
                 value
             }
-            console.log('add', data)
+            // console.log('add', data)
             //Вызов события, название события и аргументы
             this.$emit('addNewPayment', data)
-        }
-    },
+        },
+        ...mapActions([
+     'loadCategories'
+   ]),
+      mounted () {
+   if (!this.getCategoryList.length) {
+     this.loadCategories()
+   }
+ }
+     },
     computed: {
         getCurrentDate() {
             const today = new Date()
@@ -56,7 +73,10 @@ methods: {
             const m = today.getMonth() + 1
             const y = today.getFullYear()
             return `${d}.${m}.${y}`
-        }
+        },
+        ...mapGetters([
+     'getCategoryList'
+   ])
     }
 }
 </script>
@@ -78,6 +98,9 @@ methods: {
     display: flex;
     flex-direction: column;
 
+    select{
+      margin-bottom: 10px;
+    }
     input:not(:last-child){
       margin-bottom: 10px;
     } 

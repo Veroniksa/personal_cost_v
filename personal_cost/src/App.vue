@@ -6,6 +6,7 @@
     <main>
       <AddPayment @addNewPayment="addData" />
       <br/>
+      Totatl: {{ getFPV }}
       <PaymentsDisplay :list="paymentsList"/>
       
     </main>
@@ -15,24 +16,34 @@
 <script>
 import PaymentsDisplay from './components/PaymentsDisplay.vue'
 import AddPayment from './components/AddPayment.vue'
+/*import CategorySelect from "./components/CategorySelect.vue"
+<CategorySelect :categories="categories" />*/
 
+import { mapMutations, mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'App',
   components: {
     PaymentsDisplay,
+    //CategorySelect,
     AddPayment
   },
-  data: () => ({
-    paymentsList: []
-  }),
   methods: {
+    ...mapMutations([
+      'setPaymentsListData',
+      'addDataToPaymentsList'
+    ]),
+    ...mapActions([
+      'fetchData',
+      'fetchCategory'
+    ]),
     addData(data){
-      console.log(data)
+      //console.log(data)
       // this.paymentsList.push(data)
-      this.paymentsList = [...this.paymentsList, data]
+      //this.paymentsList = [...this.paymentsList, data]
+      this.addDataToPaymentsList(data)
     },
-    fetchData() {
+/*     fetchData() {
       return [
         {
           date: "28.03.2020",
@@ -50,10 +61,29 @@ export default {
           value: 200
         },
       ]
-    }
+    } */
+  },
+  computed: {
+    ...mapGetters({
+      paymentsList: 'getPaymentList',
+      categories: 'getCategoryList'
+    }),
+    getFPV(){
+      return this.$store.getters.getFuulPaymentValue
+    },
+/*     paymentsList(){
+      return this.$store.getters.getPaymentList
+    } */
   },
   created() {
-    this.paymentsList = this.fetchData()
+    //this.$store.commit('setPaymentsListData', this.fetchData()) //mutations
+    //this.setPaymentsListData(this.fetchData())
+    //this.$store.dispatch('fetchData') //actions(нативная запись)
+    this.fetchData()
+    if(!this.categories.length) {
+      this.fetchCategory()
+    }
+    //this.paymentsList = this.fetchData(),
   }
 }
 </script>
