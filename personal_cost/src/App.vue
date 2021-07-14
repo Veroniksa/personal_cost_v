@@ -3,12 +3,34 @@
     <header>
       <h1>My personal cost</h1>
     </header>
+    <div class="menu">
+      <router-link to="/dashboard">Dashboard</router-link> /
+      <router-link to="/about">About</router-link> /
+      <button @click="goToThePageNoFound">Not Found</button>
+<!--       <router-link to="/NotFound">Not Found</router-link>
+ --><!--       <a href="dashboard">Dashboard</a> /
+      <a href="about">About</a> /
+      <a href="notfound">Not Found</a> -->
+    </div>
     <main>
+      <div class="content-page">
+        <router-view></router-view>
+<!--         <About v-if="page === 'about'"/>
+        <Dashboard v-if="page === 'dashboard'"/>
+        <NotFound v-if="page === 'notfound'"/> -->
+      </div>
+
+
+
       <AddPayment @addNewPayment="addData" />
       <br/>
       Totatl: {{ getFPV }}
-      <PaymentsDisplay :list="paymentsList"/>
-      
+      <PaymentsDisplay :list="currentElements"/>
+      <Pagination 
+                  :cur="curPage" 
+                  :n="n" 
+                  :length="paymentsList.length"
+                  @paginate="onChangePage"/>
     </main>
   </div>
 </template>
@@ -16,8 +38,13 @@
 <script>
 import PaymentsDisplay from './components/PaymentsDisplay.vue'
 import AddPayment from './components/AddPayment.vue'
+import Pagination from './components/Pagination.vue'
 /*import CategorySelect from "./components/CategorySelect.vue"
 <CategorySelect :categories="categories" />*/
+
+/* import Dashboard from './views/Dashboard.vue'
+import About from './views/About.vue'
+import NotFound from './views/NotFound.vue' */
 
 import { mapMutations, mapGetters, mapActions } from 'vuex'
 
@@ -25,8 +52,18 @@ export default {
   name: 'App',
   components: {
     PaymentsDisplay,
-    //CategorySelect,
+    Pagination,
+/*     Dashboard,
+    About,
+    NotFound, */
     AddPayment
+  },
+  data(){
+    return {
+      page: '',
+      curPage: 1,
+      n: 2,
+    }
   },
   methods: {
     ...mapMutations([
@@ -43,31 +80,25 @@ export default {
       //this.paymentsList = [...this.paymentsList, data]
       this.addDataToPaymentsList(data)
     },
-/*     fetchData() {
-      return [
-        {
-          date: "28.03.2020",
-          category: "Food",
-          value: 169
-        },
-        {
-          date: "20.04.2021",
-          category: "Sport",
-          value: 400
-        },
-        {
-          date: "28.05.2020",
-          category: "Internet",
-          value: 200
-        },
-      ]
+    goToThePageNoFound(){
+      this.$router.push({name: "NotFound"})
+    },
+/*     setPage(){
+      this.page = location.pathname.slice(1)
     } */
+    onChangePage(p){
+      this.curPage = p
+    }
   },
   computed: {
     ...mapGetters({
       paymentsList: 'getPaymentList',
       categories: 'getCategoryList'
     }),
+    currentElements(){
+      const { n, curPage } = this
+      return this.paymentsList.slice(n * (curPage - 1), n* (curPage - 1)+n)
+    },
     getFPV(){
       return this.$store.getters.getFuulPaymentValue
     },
@@ -84,6 +115,21 @@ export default {
       this.fetchCategory()
     }
     //this.paymentsList = this.fetchData(),
+  },
+  mounted(){
+/*       this.setPage()
+      const links = document.querySelectorAll('a')
+      links.forEach(link =>{
+        link.addEventListener('click', event=>{
+          event.preventDefault()
+          history.pushState({}, "", link.href)
+          this.setPage()
+        })
+      })
+      window.addEventListener('popstate', this.setPage) */
+    const page = this.$route.params.page || 1
+    //console.log(page)
+    this.curPage = Number(page)
   }
 }
 </script>

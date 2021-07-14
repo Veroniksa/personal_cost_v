@@ -42,7 +42,7 @@ export default new Vuex.Store({
                         { "id": 4, "date": "23.03.2020", "category": "Entertaiment", "value": 969 },
                         { "id": 5, "date": "24.03.2020", "category": "Education", "value": 1500 },
                         { "id": 6, "date": "25.03.2020", "category": "Food", "value": 200 }
-                    ])
+                    ]);
                 },2000);
             }).then(res=>{
                 commit('setPaymentListData', res);
