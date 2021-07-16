@@ -62,7 +62,7 @@ export default {
     return {
       page: '',
       curPage: 1,
-      n: 2,
+      n: 3,
     }
   },
   methods: {

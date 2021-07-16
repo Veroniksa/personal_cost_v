@@ -38,6 +38,11 @@ export default {
       }
   },
 methods: {
+  goToPageDashboard(){
+    this.$router.push({
+       name: 'dashboard'
+    })
+  },
     cancell(){
         this.date = '',
         this.category = '',
@@ -54,6 +59,12 @@ methods: {
                 value
             }
             // console.log('add', data)
+            if(this.getValueQueryFromRoute && this.getCategoryParamsFromRoute){
+              this.$store.commit('addDataToPaymentsList', data)
+              this.goToPageDashboard
+              return
+            }
+
             //Вызов события, название события и аргументы
             this.$emit('addNewPayment', data)
         },
@@ -76,8 +87,21 @@ methods: {
         },
         ...mapGetters([
      'getCategoryList'
-   ])
-    }
+   ]),
+   getValueQueryFromRoute(){
+     return Number(this.$route.query?.value) ?? null
+   },
+    getCategoryParamsFromRoute(){
+     return this.$route.params?.selected ?? null
+   },
+    },
+  created(){
+     if(!this.getValueQueryFromRoute || !this.getCategoryParamsFromRoute){
+       this.goToPageDashboard
+     }
+     this.selected = this.getCategoryParamsFromRoute
+     this.value = this.getValueQueryFromRoute
+   }
 }
 </script>
 

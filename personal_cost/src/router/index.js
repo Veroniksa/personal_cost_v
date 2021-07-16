@@ -4,6 +4,7 @@ import Router from 'vue-router';
 import Dashboard from '../views/Dashboard.vue';
 import About from '../views/About.vue';
 import NotFound from '../views/NotFound.vue';
+import AddPayment from '../components/AddPayment.vue';
 
 Vue.use(Router);
 
@@ -19,6 +20,12 @@ const router = new Router({
             path:'/dashboard/:page',
             component: Dashboard,
             name: 'dashboard'
+        },
+        
+        {
+            path:'/add/payment/:selected',
+            component: AddPayment,
+            name: 'about' 
         },
         {
             path:'/about',

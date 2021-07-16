@@ -3,7 +3,7 @@
         
         <div v-for="(item, idx) in list" 
         :key="idx">
-            {{ idx + 1 }} - {{ item }}
+            {{ item.id }}  {{ item }}
         </div>
     </div>
 </template>
