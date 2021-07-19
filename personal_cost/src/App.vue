@@ -31,6 +31,11 @@
                   :n="n" 
                   :length="paymentsList.length"
                   @paginate="onChangePage"/>
+      <transition name="fade">
+        <modal-window close="onClose" v-if="modalSettings.name" :settings="modalSettings"/>
+      </transition>
+      <button @click="showPaymenysForm">Show Paymenys Form</button>
+      <button @click="closePaymenysForm">Close Paymenys Form</button>
     </main>
   </div>
 </template>
@@ -56,13 +61,20 @@ export default {
 /*     Dashboard,
     About,
     NotFound, */
-    AddPayment
+    AddPayment,
+    ModalWindow: ()=>import(/* webpackChunkName: 'ModalWindow'*/'./components/ModalWindow.vue')
   },
   data(){
     return {
       page: '',
+      settings: {
+        header: "AddPayment",
+        content: "addPaymentForm"
+      },
       curPage: 1,
       n: 3,
+      modalShown: false,
+      modalSettings: {}
     }
   },
   methods: {
@@ -83,11 +95,27 @@ export default {
     goToThePageNoFound(){
       this.$router.push({name: "NotFound"})
     },
+    onClose(){
+      this.addFormShown = false
+    },
 /*     setPage(){
       this.page = location.pathname.slice(1)
     } */
     onChangePage(p){
       this.curPage = p
+    },
+    showPaymenysForm(){
+      this.$modal.show('AddPayment', {header: "Add"})
+    },
+    closePaymenysForm(){
+      this.$modal.hide()
+    },
+    onShown(settings) {
+      this.modalSettings = settings
+      console.log(settings)
+    },
+    onHide(){
+      this.modalSettings = {}
     }
   },
   computed: {
@@ -130,6 +158,12 @@ export default {
     const page = this.$route.params.page || 1
     //console.log(page)
     this.curPage = Number(page)
+    this.$modal.EventBus.$on('shown', this.onShown)
+    this.$modal.EventBus.$on('hide', this.onHide)
+  },
+  beforeDestroy(){
+    this.$modal.EventBus.$off('shown', this.onShown)
+    this.$modal.EventBus.$off('hide', this.onHide)
   }
 }
 </script>
@@ -161,5 +195,14 @@ export default {
     color: white;
     border: none;
   }
+}
+</style>
+
+<style>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>

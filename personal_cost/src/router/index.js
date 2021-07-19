@@ -1,11 +1,11 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import Dashboard from '../views/Dashboard.vue';
+/* import Dashboard from '../views/Dashboard.vue';
 import About from '../views/About.vue';
 import NotFound from '../views/NotFound.vue';
 import AddPayment from '../components/AddPayment.vue';
-
+ */
 Vue.use(Router);
 
 const router = new Router({
@@ -13,28 +13,28 @@ const router = new Router({
     routes: [
         {
             path:'/dashboard',//url
-            component: Dashboard,//quello componente che si apre
+            component: ()=>import(/* webpackChunkName: 'dashboard'*/'../views/Dashboard.vue'),//quello componente che si apre
             name: 'dashboard' //nome del url === nome del componente
         },
         {
             path:'/dashboard/:page',
-            component: Dashboard,
+            component: ()=>import(/* webpackChunkName: 'Dashboard'*/'../views/Dashboard.vue'),
             name: 'dashboard'
         },
         
         {
             path:'/add/payment/:selected',
-            component: AddPayment,
+            component: ()=>import(/* webpackChunkName: 'AddPayment'*/'../components/AddPayment.vue'),
             name: 'about' 
         },
         {
             path:'/about',
-            component: About,
+            component: ()=>import(/* webpackChunkName: 'About'*/'../views/About.vue'),
             name: 'about' 
         },
         {
             path:'/about*',
-            component: About,
+            component: ()=>import(/* webpackChunkName: 'About'*/'../views/NotFound.vue'),
             name: 'about' 
         },
 /*         {
@@ -44,7 +44,7 @@ const router = new Router({
         }, */
         {
             path: '*',
-            component: NotFound
+            component: ()=>import(/* webpackChunkName: 'NotFound' */'../views/NotFound.vue')
         }
     ]
 
