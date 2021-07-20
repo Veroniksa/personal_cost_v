@@ -33,12 +33,9 @@
                   @paginate="onChangePage"/>
       <transition name="fade">
         <modal-window @close="onClose" v-if="modalSettings.name" :settings="modalSettings"/>
-            
       </transition>
       <button @click="showPaymenysForm">Show Paymenys Form</button>
       <button @click="closePaymenysForm">Close Paymenys Form</button>
-
-      <button @click="editShow = !editShow">Edit Menu</button>
     </main>
   </div>
 </template>

@@ -3,7 +3,10 @@
         <div v-for="(item, idx) in list" 
         :key="idx">
             {{ item.id }}  {{ item }}
+            <transition name="fade">
             <ModalContextMenu  v-if="editShow" :settingss="modaleSettings"/>
+            </transition>
+            <button @click="editShow = !editShow">Edit Menu</button>
         </div>
     </div>
 </template>
@@ -53,5 +56,10 @@ export default {
 </script>
 
 <style lang="scss">
-
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 2s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 </style>
