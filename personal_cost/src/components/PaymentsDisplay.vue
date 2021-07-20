@@ -3,8 +3,7 @@
         <div v-for="(item, idx) in list" 
         :key="idx">
             {{ item.id }}  {{ item }}
-            <ModalContextMenu @click="closeEdit" v-if="editShow"/>
-            <button @click="editShow = !editShow">Edit Menu</button>
+            <ModalContextMenu  v-if="editShow" :settingss="modaleSettings"/>
         </div>
     </div>
 </template>
@@ -15,6 +14,7 @@ export default {
   components: { ModalContextMenu },
     name: "PaymentsDisplay",
     props: {
+        settingss: Object,
       list: {
           type: Array,
           default: () =>[]
@@ -22,16 +22,32 @@ export default {
     },
     data () {
         return {
-            editShow: false
+             editShow: false,
+            modaleSettings: {}, 
         }
     },
     methods: {
-        closeEdit(){
+         closeEdit(){
             this.editShow = false
         },
         onClicked(){
             console.log('edit')
-        }
+        },
+        onEdit(settingss){
+            this.modaleSettings = settingss
+            console.log(settingss)
+        },
+        onDelete(){
+            this.modaleSettings = {}
+        } 
+    },
+    mounted(){
+         this.$modale.EventBus.$on('edit', this.onEdit)
+        this.$modale.EventBus.$on('delete', this.onDelete) 
+    },
+    beforeDestroy(){
+         this.$modale.EventBus.$off('edit', this.onEdit)
+        this.$modale.EventBus.$off('delete', this.onDelete) 
     }
 }
 </script>
