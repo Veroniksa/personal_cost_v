@@ -1,9 +1,9 @@
 <template>
     <div class="payments-list">
-        <div v-for="item in list" 
+        <div v-for="(item, idx) in list" 
         :key="item.id">
             {{ item.id }}  {{ item }}
-            <span class="menuContext" @click="onContextMenuClick($event, item)">...</span>
+            <span class="menuContext" @click="onContextMenuClick(item, idx)">...</span>
 <!--             <transition name="fade">
             <ModalContextMenu  v-if="editShow" :settingss="modaleSettings"/>
             </transition>
@@ -26,37 +26,63 @@ export default {
     },
     data () {
         return {
+          clientY: "",
+          clientX: ""
 /*              editShow: false,
             modaleSettings: {},  */
         }
     },
     methods: {
-        onContextMenuClick(event, item) {
-          const items = [
+         onContextMenuClick(item, idx) {
+           debugger
+          this.clientY = event.clientY;
+          this.clientX = event.clientX;
+         // debugger 
+        this.$modale.showMenu('ModalContextMenu',{
+        header: "testik",
+        id: idx,
+        x: this.clientX,
+        y: this.clientY,
+        item: item
+          /*
+           const items = [
             { text: "Edit", action: () => {this.actionEdit(item)}},
             { text: "Delete", action: () => {this.actionDelete(item)}},
           ];
-          this.$modale.show({event,items});
-        },
+
+
+        }, 
         actionEdit(item){
+          this.clientY = event.clientY;
+          this.clientX = event.clientX;
          // debugger 
-        this.$modal.show('AddPayment',{header:"Add", edetedValue:item})
+        this.$modale.showMenu('ModalContextMenu',{
+        header: "testik",
+        id: item.id,
+        x: this.clientX,
+        y: this.clientY,
+        item: item,
+      });
         console.log(item)
-/*           this.$modale.show("ModalContextMenu", {
+           this.$modale.show("ModalContextMenu", {
           item:item,
           id: item.id,
           header: "chenge"
         })   */
-         },
+/*          },
          actionDelete(item){
             console.log(item.id)
             this.$store.commit("deletPaymentListData", item.id)
             this.$module.close()
         }  
     
-        }
+        } */
     
+        }
+        )}
+    }
 }
+
 </script>
 
 <style lang="scss">

@@ -43,6 +43,11 @@
         <modal-context-menu 
         :setting="undateSettings"
         :undateSettings="undateSettings"
+        v-if="undateSettings.name"
+                :style="{
+          top: `${this.undateSettings.y + 5}px`,
+          left: `${this.undateSettings.x - 80}px`,
+        }"
          /><!-- :setting="undateSettings"
         v-if="undateSettings.name"      // v-if="undateSettings.name"
         :settings="undateSettings"-->
@@ -171,14 +176,14 @@ export default {
     this.curPage = Number(page)
     this.$modal.EventBus.$on('shown', this.onShown)
     this.$modal.EventBus.$on('hide', this.onHide)
-    this.$modale.EventBus.$on('shown', this.onItemsShow)
-    this.$modale.EventBus.$on('hide', this.onItemsHide)
+    this.$modale.EventBus.$on('showMenu', this.onItemsShow)
+    this.$modale.EventBus.$on('closeMenu', this.onItemsHide)
   },
   beforeDestroy(){
     this.$modal.EventBus.$off('shown', this.onShown)
     this.$modal.EventBus.$off('hide', this.onHide)
-    this.$modale.EventBus.$off('shown', this.onItemsShow)
-    this.$modale.EventBus.$off('hide', this.onItemsHide)
+    this.$modale.EventBus.$off('showMenu', this.onItemsShow)
+    this.$modale.EventBus.$off('closeMenu', this.onItemsHide)
   }
 }
 </script>

@@ -4,25 +4,17 @@ export default {
             return;
         }
     this.installed = true;
-    this.caller = null;
 
     Vue.prototype.$modale = {
         EventBus: new Vue(),
 
-        show({ event, items }) {
-            const caller = event.target;
-            if (caller !== this.caller) {
-              this.caller = caller;
-              this.EventBus.$emit("shown", { items, caller });
-            } else {
-              this.close();
-            }
-          },
+        showMenu({ name, settings }) {
+              this.EventBus.$emit("showMenu", { name, ...settings });
+            },
 
-          close() {
-            this.caller = null;
-            this.EventBus.$emit("close");
+          closeMenu() {
+            this.EventBus.$emit("closeMenu");
           },
-    };
     }
-};
+  }
+}
