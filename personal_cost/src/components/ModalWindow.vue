@@ -15,9 +15,14 @@ import AddPayment from './AddPayment.vue';
 export default {
     components: { AddPayment},
     props: {
-        settings: Object
-
+        settings: Object,
+        undateSettings: Object
     },
+    data(){
+        return {
+            testData: this.settings
+        }
+    }
 }
 </script>
 

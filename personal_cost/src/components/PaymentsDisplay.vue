@@ -1,23 +1,24 @@
 <template>
     <div class="payments-list">
-        <div v-for="(item, idx) in list" 
-        :key="idx">
+        <div v-for="item in list" 
+        :key="item.id">
             {{ item.id }}  {{ item }}
-            <transition name="fade">
+            <span class="menuContext" @click="onContextMenuClick($event, item)">...</span>
+<!--             <transition name="fade">
             <ModalContextMenu  v-if="editShow" :settingss="modaleSettings"/>
             </transition>
-            <button @click="editShow = !editShow">Edit Menu</button>
+            <button @click="editShow = !editShow">Edit Menu</button> -->
         </div>
     </div>
 </template>
 
 <script>
-import ModalContextMenu from './ModalContextMenu.vue'
+/* import ModalContextMenu from './ModalContextMenu.vue' */
 export default {
-  components: { ModalContextMenu },
+/*   components: { ModalContextMenu } ,*/
     name: "PaymentsDisplay",
     props: {
-        settingss: Object,
+        settings: Object,
       list: {
           type: Array,
           default: () =>[]
@@ -25,33 +26,36 @@ export default {
     },
     data () {
         return {
-             editShow: false,
-            modaleSettings: {}, 
+/*              editShow: false,
+            modaleSettings: {},  */
         }
     },
     methods: {
-         closeEdit(){
-            this.editShow = false
+        onContextMenuClick(event, item) {
+          const items = [
+            { text: "Edit", action: () => {this.actionEdit(item)}},
+            { text: "Delete", action: () => {this.actionDelete(item)}},
+          ];
+          this.$modale.show({event,items});
         },
-        onClicked(){
-            console.log('edit')
-        },
-        onEdit(settingss){
-            this.modaleSettings = settingss
-            console.log(settingss)
-        },
-        onDelete(){
-            this.modaleSettings = {}
-        } 
-    },
-    mounted(){
-         this.$modale.EventBus.$on('edit', this.onEdit)
-        this.$modale.EventBus.$on('delete', this.onDelete) 
-    },
-    beforeDestroy(){
-         this.$modale.EventBus.$off('edit', this.onEdit)
-        this.$modale.EventBus.$off('delete', this.onDelete) 
-    }
+        actionEdit(item){
+         // debugger 
+        this.$modal.show('AddPayment',{header:"Add", edetedValue:item})
+        console.log(item)
+/*           this.$modale.show("ModalContextMenu", {
+          item:item,
+          id: item.id,
+          header: "chenge"
+        })   */
+         },
+         actionDelete(item){
+            console.log(item.id)
+            this.$store.commit("deletPaymentListData", item.id)
+            this.$module.close()
+        }  
+    
+        }
+    
 }
 </script>
 
@@ -62,4 +66,5 @@ export default {
 .fade-enter, .fade-leave-to {
   opacity: 0;
 }
+
 </style>

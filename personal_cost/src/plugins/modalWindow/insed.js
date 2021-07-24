@@ -1,20 +1,28 @@
 export default {
     install(Vue){
         if(this.installed){
-            return
+            return;
         }
     this.installed = true;
+    this.caller = null;
 
     Vue.prototype.$modale = {
         EventBus: new Vue(),
 
-        edit(name, settingss) {
-            this.EventBus.$emit('edit', {name, ...settingss});
-        },
+        show({ event, items }) {
+            const caller = event.target;
+            if (caller !== this.caller) {
+              this.caller = caller;
+              this.EventBus.$emit("shown", { items, caller });
+            } else {
+              this.close();
+            }
+          },
 
-        delete() {
-            this.EventBus.$emit('delete');
-        }
+          close() {
+            this.caller = null;
+            this.EventBus.$emit("close");
+          },
     };
     }
 };

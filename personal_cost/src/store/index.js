@@ -1,8 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-
-
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -12,6 +10,18 @@ export default new Vuex.Store({
     },
 
     mutations: {
+/*         deletePayment(state, payload) {
+            state.paymentsList.splice(payload, 1);
+        }, */
+/*         changePayment(state, payload, ) {
+            state.paymentsList.splice(payload.idx, 1, payload.item);
+        }, */
+        updatePaymentList(state, payload){
+            state.paymentsList = payload;
+        },
+        deletPaymentListData(state, payload){
+            state.paymentsList.splice(payload.id, 1);
+        },
         setPaymentListData(state, payload) {
             state.paymentsList = payload;
         },
@@ -65,6 +75,6 @@ export default new Vuex.Store({
         getFuulPaymentValue: state =>{
             return state.paymentsList.reduce((res, cur)=> res + cur.value, 0);
         },
-        getCategoryList: state=>state.categoryList
+        getCategoryList: state=>state.categoryList,
     }
 });

@@ -32,13 +32,26 @@
                   :length="paymentsList.length"
                   @paginate="onChangePage"/>
       <transition name="fade">
-        <modal-window @close="onClose" v-if="modalSettings.name" :settings="modalSettings"/>
+        <modal-window @close="onClose" 
+        v-if="modalSettings.name" 
+        :settings="modalSettings"
+        :undateSettings="undateSettings"/>
       </transition>
       <button @click="showPaymenysForm">Show Paymenys Form</button>
       <button @click="closePaymenysForm">Close Paymenys Form</button>
+      <transition name="fade">
+        <modal-context-menu 
+        :setting="undateSettings"
+        :undateSettings="undateSettings"
+         /><!-- :setting="undateSettings"
+        v-if="undateSettings.name"      // v-if="undateSettings.name"
+        :settings="undateSettings"-->
+      </transition>
+      
     </main>
   </div>
 </template>
+
 
 <script>
 import PaymentsDisplay from './components/PaymentsDisplay.vue'
@@ -52,6 +65,7 @@ import About from './views/About.vue'
 import NotFound from './views/NotFound.vue' */
 
 import { mapMutations, mapGetters, mapActions } from 'vuex'
+import ModalContextMenu from './components/ModalContextMenu.vue'
 
 export default {
   name: 'App',
@@ -62,7 +76,8 @@ export default {
     About,
     NotFound, */
     AddPayment,
-    ModalWindow: ()=>import(/* webpackChunkName: 'ModalWindow'*/'./components/ModalWindow.vue')
+    ModalWindow: ()=>import(/* webpackChunkName: 'ModalWindow'*/'./components/ModalWindow.vue'),
+    ModalContextMenu/* : ()=>import('./components/ModalContextMenu.vue') */
   },
   data(){
     return {
@@ -74,13 +89,15 @@ export default {
       curPage: 1,
       n: 3,
       modalShown: false,
-      modalSettings: {}
+      modalSettings: {},
+      undateSettings: {}
     }
   },
   methods: {
     ...mapMutations([
       'setPaymentsListData',
-      'addDataToPaymentsList'
+      'addDataToPaymentsList',
+      'deletPaymentListData'
     ]),
     ...mapActions([
       'fetchData',
@@ -112,10 +129,16 @@ export default {
     },
     onShown(settings) {
       this.modalSettings = settings
-      console.log(settings)
+      //console.log(settings)
     },
     onHide(){
       this.modalSettings = {}
+    },
+    onItemsShow(items){
+      this.undateSettings = items
+    },
+    onItemsHide(){
+      this.undateSettings = {}
     }
   },
   computed: {
@@ -142,30 +165,20 @@ export default {
     if(!this.categories.length) {
       this.fetchCategory()
     }
-    //this.paymentsList = this.fetchData(),
   },
   mounted(){  
-
-
-/*       this.setPage()
-      const links = document.querySelectorAll('a')
-      links.forEach(link =>{
-        link.addEventListener('click', event=>{
-          event.preventDefault()
-          history.pushState({}, "", link.href)
-          this.setPage()
-        })
-      })
-      window.addEventListener('popstate', this.setPage) */
     const page = this.$route.params.page || 1
-    //console.log(page)
     this.curPage = Number(page)
     this.$modal.EventBus.$on('shown', this.onShown)
     this.$modal.EventBus.$on('hide', this.onHide)
+    this.$modale.EventBus.$on('shown', this.onItemsShow)
+    this.$modale.EventBus.$on('hide', this.onItemsHide)
   },
   beforeDestroy(){
     this.$modal.EventBus.$off('shown', this.onShown)
     this.$modal.EventBus.$off('hide', this.onHide)
+    this.$modale.EventBus.$off('shown', this.onItemsShow)
+    this.$modale.EventBus.$off('hide', this.onItemsHide)
   }
 }
 </script>
