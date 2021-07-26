@@ -8,7 +8,7 @@ describe('TestComponent', ()=> {
                 message: "Hello from tests!"
             }
         });
-
+//проверка
         expect(wrapper.text()).toEqual(
             'The message is: Hello from tests!'
             );
