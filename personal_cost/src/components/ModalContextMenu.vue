@@ -12,7 +12,7 @@
       <button @click="edit" class="edit">Edit</button>
     </div>
     <div>
-      <button @click="deleted" class="delete">Delete</button>
+      <button class="delete">Delete</button>
     </div>
   </div>
 </template>
@@ -27,9 +27,6 @@ export default {
     };
   },
   methods: {
-    deleted(){
-      this.$store.commit('deletPaymentListData', this.undateSettings.id)
-    },
     edit() {
       this.$modal.show("AddPayment", { header: "Add" });
     },

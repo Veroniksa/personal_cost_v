@@ -18,9 +18,8 @@
         </select>
       </div>
       <input v-model.number="value" type="number" placeholder="value" />
-      <button @click="onClick">Add +</button>
+      <button @click="onClick">Save +</button>
       <button @click="cancell">Cancell</button>
-      <button @click="changePayment">Save +</button>
     </div>
   </div>
 </template>
@@ -33,9 +32,10 @@ export default {
   data() {
     return {
       date: "",
-      selected: this.finalCategory,
+      category: this.finalCategory,
       value: Number(this.finalValue),
       // show: false,
+      selected: "",
     };
   },
   methods: {
@@ -55,25 +55,12 @@ export default {
     cancell() {
       (this.date = ""), (this.category = ""), (this.value = null);
     },
-    changePayment() {
-      const { selected, value } = this;
-      const date = this.date;
-      
-      const id = this.undateSettings.item.id;
-      const data = {
-        idx: this.undateSettings.id,
-        item: {id, date, selected, value},
-      };
-      console.log(data)
-      this.$store.commit("changePayment", data);
-      this.$modal.hide();
-      this.$modale.closeMenu();
-    },
+
     onClick() {
       const { value } = this;
       const data = {
         date: this.date || this.getCurrentDate,
-        selected: this.selected,
+        category: this.selected,
         value,
       };
       // console.log('add', data)
@@ -86,7 +73,7 @@ export default {
     },
     ...mapActions(["loadCategories"]),
     mounted() {
-      this.selected = this.finalCategory;
+      this.category = this.finalCategory;
       this.value = this.finalValue;
       if (!this.getCategoryList.length) {
         this.loadCategories();
@@ -114,7 +101,7 @@ export default {
     finalValue() {
       if (this.getValueQueryFromRoute) {
         return this.getValueQueryFromRoute;
-      } else if (this.undateSettings) {
+      } else if (this.undateSettings.name) {
         return this.undateSettings.item.value;
       } else return "";
     },
@@ -126,22 +113,18 @@ export default {
       } else return "Food";
     },
   },
-/*   created() {
+  created() {
     /*     if(this.values){
       this.data = this.values.date
     } */
     /*       this.data = this.editedValue.data
       this.category = this.editedValue.category
-      this.value = this.editedValue.value 
+      this.value = this.editedValue.value */
     if (!this.getValueQueryFromRoute || !this.getCategoryParamsFromRoute) {
       this.goToPageDashboard;
     }
     this.selected = this.getCategoryParamsFromRoute;
     this.value = this.getValueQueryFromRoute;
-  }, */
-  mounted() {
-    this.selected = this.finalCategory;
-    this.value = this.finalValue;
   },
 };
 </script>

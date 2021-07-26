@@ -13,11 +13,14 @@ export default new Vuex.Store({
 /*         deletePayment(state, payload) {
             state.paymentsList.splice(payload, 1);
         }, */
-        changePayment(state, payload, ) {
+/*         changePayment(state, payload, ) {
             state.paymentsList.splice(payload.idx, 1, payload.item);
-        }, 
+        }, */
+        updatePaymentList(state, payload){
+            state.paymentsList = payload;
+        },
         deletPaymentListData(state, payload){
-            state.paymentsList.splice(payload, 1);
+            state.paymentsList.splice(payload.id, 1);
         },
         setPaymentListData(state, payload) {
             state.paymentsList = payload;
@@ -58,7 +61,7 @@ export default new Vuex.Store({
         fetchCategory({commit}){
             return new Promise((resolve)=>{
                 setTimeout(()=>{
-                    resolve(['Food', 'Sport', 'Education', 'Auto', 'Health', 'Family', 'Navigation', 'Entertaiment']);
+                    resolve(['Food', 'Sport', 'Education', 'Auto', 'Health', 'Family']);
                 },1000);
             }).then(res=> {
                 commit('setCategoryList', res);
