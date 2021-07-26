@@ -1,9 +1,5 @@
 <template>
   <div :class="[$style.addPaym]">
-    <!-- @addValues="addValues" -->
-    <!-- <div :class="[$style.btnToggle]">
-      <button @click="toggle">ADD NEW COST +</button>
-    </div> -->
     <div :class="[$style.addDate]">
       <input v-model="date" placeholder="date" />
       <div :class="[$style.addDate]">
@@ -40,13 +36,6 @@ export default {
   },
   methods: {
     ...mapMutations(["updatePaymentList"]),
-    /*   addValues(item){
-    this.updatePaymentList(item.id)
-    console.log(item)
-      this.data = this.item.data
-      this.category = this.item.category
-      this.value = this.item.value
-  }, */
     goToPageDashboard() {
       this.$router.push({
         name: "dashboard",
@@ -76,7 +65,6 @@ export default {
         selected: this.selected,
         value,
       };
-      // console.log('add', data)
 
       this.$store.commit("addDataToPaymentsList", data);
       this.goToPageDashboard;
@@ -126,19 +114,6 @@ export default {
       } else return "Food";
     },
   },
-/*   created() {
-    /*     if(this.values){
-      this.data = this.values.date
-    } */
-    /*       this.data = this.editedValue.data
-      this.category = this.editedValue.category
-      this.value = this.editedValue.value 
-    if (!this.getValueQueryFromRoute || !this.getCategoryParamsFromRoute) {
-      this.goToPageDashboard;
-    }
-    this.selected = this.getCategoryParamsFromRoute;
-    this.value = this.getValueQueryFromRoute;
-  }, */
   mounted() {
     this.selected = this.finalCategory;
     this.value = this.finalValue;
