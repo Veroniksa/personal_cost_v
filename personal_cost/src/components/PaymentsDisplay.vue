@@ -1,50 +1,55 @@
 <template>
-    <div class="payments-list">
-        <div v-for="(item, idx) in list" 
-        :key="item.id">
-            {{ item.id }}  {{ item }}
-            <span class="menuContext" @click="onContextMenuClick(item, idx)">...</span>
-<!--             <transition name="fade">
+  <div class="payments-list">
+    <button @click="toggle">ADD NEW COST +</button>
+
+    <div class="display" v-for="(item, idx) in list" :key="item.id">
+      {{ item.id }} {{ item }}
+      <span class="menuContext" @click="onContextMenuClick(item, idx)"
+        >...</span
+      >
+      <!--             <transition name="fade">
             <ModalContextMenu  v-if="editShow" :settingss="modaleSettings"/>
             </transition>
             <button @click="editShow = !editShow">Edit Menu</button> -->
-        </div>
     </div>
+  </div>
 </template>
 
 <script>
 /* import ModalContextMenu from './ModalContextMenu.vue' */
 export default {
-/*   components: { ModalContextMenu } ,*/
-    name: "PaymentsDisplay",
-    props: {
-        settings: Object,
-      list: {
-          type: Array,
-          default: () =>[]
-      }
+  /*   components: { ModalContextMenu } ,*/
+  name: "PaymentsDisplay",
+  props: {
+    settings: Object,
+    list: {
+      type: Array,
+      default: () => [],
     },
-    data () {
-        return {
-          clientY: "",
-          clientX: ""
-/*              editShow: false,
+  },
+  data() {
+    return {
+      clientY: "",
+      clientX: "",
+      /*              editShow: false,
             modaleSettings: {},  */
-        }
+    };
+  },
+  methods: {
+    toggle() {
+      this.$modal.show("AddPayment", { header: "Add" });
     },
-    methods: {
-         onContextMenuClick(item, idx) {
-           debugger
-          this.clientY = event.clientY;
-          this.clientX = event.clientX;
-         // debugger 
-        this.$modale.showMenu('ModalContextMenu',{
+    onContextMenuClick(item, idx) {
+      this.clientY = event.clientY;
+      this.clientX = event.clientX;
+      // debugger
+      this.$modale.showMenu("ModalContextMenu", {
         header: "testik",
         id: idx,
         x: this.clientX,
         y: this.clientY,
-        item: item
-          /*
+        item: item,
+        /*
            const items = [
             { text: "Edit", action: () => {this.actionEdit(item)}},
             { text: "Delete", action: () => {this.actionDelete(item)}},
@@ -69,7 +74,7 @@ export default {
           id: item.id,
           header: "chenge"
         })   */
-/*          },
+        /*          },
          actionDelete(item){
             console.log(item.id)
             this.$store.commit("deletPaymentListData", item.id)
@@ -77,20 +82,19 @@ export default {
         }  
     
         } */
-    
-        }
-        )}
-    }
-}
-
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss">
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity 2s;
 }
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
-
 </style>

@@ -2,7 +2,9 @@
   <div class="wrapper">
       <div class="header">{{ settings.header }}</div>
       <div class="content">
-          <component :is="settings.name" />
+          <component :is="settings.name" 
+          :settings="settings"
+          :undateSettings="undateSettings"/>
       </div>
       <div class="footer">
           <button @click="$modal.hide()">Close</button>
