@@ -5,9 +5,9 @@
       <button @click="toggle">ADD NEW COST +</button>
     </div> -->
     <div :class="[$style.addDate]">
-      <input v-model="date" placeholder="date" />
+      <input v-model="date" placeholder="date" class="date" />
       <div :class="[$style.addDate]">
-        <select v-model="selected">
+        <select v-model="selected" class="selected">
           <option
             v-for="(option, idx) in getCategoryList"
             :key="idx"
@@ -17,7 +17,7 @@
           </option>
         </select>
       </div>
-      <input v-model.number="value" type="number" placeholder="value" />
+      <input v-model.number="value" type="number" placeholder="value" class="value"/>
       <button @click="onClick">Save +</button>
       <button @click="cancell">Cancell</button>
     </div>

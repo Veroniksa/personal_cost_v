@@ -1,9 +1,11 @@
-import { mount } from "@vue/test-utils";
+import {it, expect} from '@jest/globals';
+import { mount} from "@vue/test-utils";
 import AddPayment from '../AddPayment.vue';
 
-discribe('Test Component AddPayment', ()=>{
-  it('Test input value'), =>{
-    const wrapper = mount(AddPayment)
-    const inputs = 
-  }
-})
+describe("Test Component AddPayment", ()=>{
+  it("Test input category", ()=>{
+    const wrapper = mount(AddPayment);
+     const category = wrapper.find('input[name=category]');
+     category.setValue(1); 
+  });
+});
