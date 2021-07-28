@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">11.11% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/36</span>
+                <span class='fraction'>0/36</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">9.09% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/22</span>
+                <span class='fraction'>0/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">27.27% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/11</span>
+                <span class='fraction'>0/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">11.11% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/36</span>
+                <span class='fraction'>0/36</span>
             </div>
         
             
@@ -243,12 +243,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -311,16 +311,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -331,6 +324,11 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -338,7 +336,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -402,12 +402,12 @@
 &lt;/template&gt;
 &nbsp;
 &lt;script&gt;
-import { mapActions, mapGetters, mapMutations } from "vuex";
+<span class="cstat-no" title="statement not covered" >import { mapActions, mapGetters, mapMutations } from "vuex";</span>
 export default {
   name: "AddPayment",
   props: ["undateSettings"],
-  data() {
-    return {
+<span class="fstat-no" title="function not covered" >  data() {</span>
+<span class="cstat-no" title="statement not covered" >    return {</span>
       date: "",
       category: this.finalCategory,
       value: Number(this.finalValue),
@@ -469,8 +469,8 @@ export default {
 <span class="cstat-no" title="statement not covered" >      return `${d}.${m}.${y}`;</span>
     },
     ...mapGetters(["getCategoryList"]),
-    getValueQueryFromRoute() {
-<span class="branch-1 cbranch-no" title="branch not covered" >      return Number(this.$route.query?.value) ?? null;</span>
+<span class="fstat-no" title="function not covered" >    getValueQueryFromRoute() {</span>
+<span class="cstat-no" title="statement not covered" >      return Number(this.$route.query?.value) ?? null;</span>
     },
 <span class="fstat-no" title="function not covered" >    getCategoryParamsFromRoute() {</span>
 <span class="cstat-no" title="statement not covered" >      return this.$route.params?.selected ?? null;</span>
@@ -490,14 +490,14 @@ export default {
 <span class="cstat-no" title="statement not covered" >      } else return "Food";</span>
     },
   },
-  created() {
+<span class="fstat-no" title="function not covered" >  created() {</span>
     /*     if(this.values){
       this.data = this.values.date
     } */
     /*       this.data = this.editedValue.data
       this.category = this.editedValue.category
       this.value = this.editedValue.value */
-<span class="branch-1 cbranch-no" title="branch not covered" >    if (!this.getValueQueryFromRoute || !this.getCategoryParamsFromRoute) {</span>
+<span class="cstat-no" title="statement not covered" >    if (!this.getValueQueryFromRoute || !this.getCategoryParamsFromRoute) {</span>
 <span class="cstat-no" title="statement not covered" >      this.goToPageDashboard;</span>
     }
 <span class="cstat-no" title="statement not covered" >    this.selected = this.getCategoryParamsFromRoute;</span>
@@ -541,7 +541,7 @@ export default {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Tue Jul 27 2021 11:52:30 GMT+0200 (Ora legale dell’Europa centrale)
+                at Tue Jul 27 2021 16:30:53 GMT+0200 (Ora legale dell’Europa centrale)
             </div>
         </div>
         <script src="../../../prettify.js"></script>

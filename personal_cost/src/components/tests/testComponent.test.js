@@ -30,7 +30,7 @@ describe('TestComponent', ()=> {
                 message: "Hello from tests!"
             }
         });
-
+        console.log(wrapper);
         expect(wrapper.text()).toContain(
             'The message is: Hello from tests!'
             );

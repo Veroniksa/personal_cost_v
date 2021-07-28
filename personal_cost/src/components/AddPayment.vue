@@ -1,13 +1,9 @@
 <template>
   <div :class="[$style.addPaym]">
-    <!-- @addValues="addValues" -->
-    <!-- <div :class="[$style.btnToggle]">
-      <button @click="toggle">ADD NEW COST +</button>
-    </div> -->
     <div :class="[$style.addDate]">
-      <input v-model="date" placeholder="date" class="date" />
+      <input v-model="date" placeholder="date" />
       <div :class="[$style.addDate]">
-        <select v-model="selected" class="selected">
+        <select v-model="selected">
           <option
             v-for="(option, idx) in getCategoryList"
             :key="idx"
@@ -17,9 +13,10 @@
           </option>
         </select>
       </div>
-      <input v-model.number="value" type="number" placeholder="value" class="value"/>
-      <button @click="onClick">Save +</button>
+      <input v-model.number="value" type="number" placeholder="value" />
+      <button @click="onClick">Add +</button>
       <button @click="cancell">Cancell</button>
+      <button @click="changePayment">Save +</button>
     </div>
   </div>
 </template>
@@ -32,21 +29,13 @@ export default {
   data() {
     return {
       date: "",
-      category: this.finalCategory,
+      selected: this.finalCategory,
       value: Number(this.finalValue),
       // show: false,
-      selected: "",
     };
   },
   methods: {
     ...mapMutations(["updatePaymentList"]),
-    /*   addValues(item){
-    this.updatePaymentList(item.id)
-    console.log(item)
-      this.data = this.item.data
-      this.category = this.item.category
-      this.value = this.item.value
-  }, */
     goToPageDashboard() {
       this.$router.push({
         name: "dashboard",
@@ -55,25 +44,35 @@ export default {
     cancell() {
       (this.date = ""), (this.category = ""), (this.value = null);
     },
-
+    changePayment() {
+      const { selected, value } = this;
+      const date = this.date;
+      
+      const id = this.undateSettings.item.id;
+      const data = {
+        idx: this.undateSettings.id,
+        item: {id, date, selected, value},
+      };
+      console.log(data)
+      this.$store.commit("changePayment", data);
+      this.$modal.hide();
+      this.$modale.closeMenu();
+    },
     onClick() {
       const { value } = this;
       const data = {
         date: this.date || this.getCurrentDate,
-        category: this.selected,
+        selected: this.selected,
         value,
       };
-      // console.log('add', data)
-
       this.$store.commit("addDataToPaymentsList", data);
       this.goToPageDashboard;
-
       //Вызов события, название события и аргументы
       this.$emit("addNewPayment", data);
     },
     ...mapActions(["loadCategories"]),
     mounted() {
-      this.category = this.finalCategory;
+      this.selected = this.finalCategory;
       this.value = this.finalValue;
       if (!this.getCategoryList.length) {
         this.loadCategories();
@@ -101,7 +100,7 @@ export default {
     finalValue() {
       if (this.getValueQueryFromRoute) {
         return this.getValueQueryFromRoute;
-      } else if (this.undateSettings.name) {
+      } else if (this.undateSettings) {
         return this.undateSettings.item.value;
       } else return "";
     },
@@ -113,22 +112,12 @@ export default {
       } else return "Food";
     },
   },
-  created() {
-    /*     if(this.values){
-      this.data = this.values.date
-    } */
-    /*       this.data = this.editedValue.data
-      this.category = this.editedValue.category
-      this.value = this.editedValue.value */
-    if (!this.getValueQueryFromRoute || !this.getCategoryParamsFromRoute) {
-      this.goToPageDashboard;
-    }
-    this.selected = this.getCategoryParamsFromRoute;
-    this.value = this.getValueQueryFromRoute;
+  mounted() {
+    this.selected = this.finalCategory;
+    this.value = this.finalValue;
   },
 };
 </script>
-
 <style lang="scss" module>
 .addPaym {
   display: flex;
@@ -145,7 +134,6 @@ export default {
 .addDate {
   display: flex;
   flex-direction: column;
-
   select {
     margin-bottom: 10px;
   }

@@ -1,18 +1,10 @@
 <template>
   <div class="content">
-    <!-- <div
-      v-for="item in items"
-      :key="item.text"
-      class="modale__item"
-      @click="onClick(item)"
-    >
-      {{ item.text }}
-    </div> -->
     <div>
       <button @click="edit" class="edit">Edit</button>
     </div>
     <div>
-      <button class="delete">Delete</button>
+      <button @click="deleted" class="delete">Delete</button>
     </div>
   </div>
 </template>
@@ -27,35 +19,13 @@ export default {
     };
   },
   methods: {
+    deleted(){
+      this.$store.commit('deletPaymentListData', this.undateSettings.id)
+    },
     edit() {
       this.$modal.show("AddPayment", { header: "Add" });
     },
-    // onClick(item) {
-    //   item.action();
-    // },
-    /*  setPosition(caller){
-            const computed = caller.getBoundingClientRect()
-            this.xPos = computed.left
-            this.yPos = computed.top
-        }, */
   },
-  computed: {
-    /*         styles(){
-            return {
-                top: `${this.yPos + 30}px`,
-                left: `${this.xPos + 20}px`
-            }
-        } */
-  },
-
-  /*     methods: {
-        onEdit(){
-            console.log('edit')
-        },
-        onDelete(){
-            console.log('delete')
-        }
-    }, */
 };
 </script>
 
