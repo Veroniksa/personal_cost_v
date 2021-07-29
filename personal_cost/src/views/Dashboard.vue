@@ -1,6 +1,18 @@
 <template>
-  <div>Dashboard
-          Totatl: {{ getFPV }}
+  <v-row>
+    <v-rol>
+      <div class="text-h4 text-md-h3 mb-8">My personal cost</div>
+      <v-dialog v-model="modalShown" width="500">
+      <template v-slot:activator="{on}">
+        <v-btn color="teal lighten-2" dark v-on="on">
+          ADD NEW COST <v-icon>mdi-plus</v-icon>
+          </v-btn>
+      </template>
+      <v-card>
+        <AddPayment @addNewPayment="addData" v-if="modalShown"/>
+      </v-card>
+      <v-btn @click="modalShown=false">Close</v-btn>
+    </v-dialog>
       <PaymentsDisplay :list="currentElements" />
       <Pagination
         :cur="curPage"
@@ -10,18 +22,24 @@
       />
             <button @click="showPaymenysForm">Show Paymenys Form</button>
       <button @click="closePaymenysForm">Close Paymenys Form</button>
-  </div>
+    </v-rol>
+    <v-rol>
+      chart
+    </v-rol>
+  </v-row>
 </template>
 
 <script>
 import { mapMutations, mapGetters, mapActions } from "vuex";
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
 import Pagination from "../components/Pagination.vue";
+import AddPayment from "../components/AddPayment.vue";
   export default {
       name: "Dashboard",
       components: {
       PaymentsDisplay,
       Pagination,
+      AddPayment
     },
       data() {
     return {
@@ -76,9 +94,6 @@ import Pagination from "../components/Pagination.vue";
     currentElements() {
       const { n, curPage } = this;
       return this.paymentsList.slice(n * (curPage - 1), n * (curPage - 1) + n);
-    },
-    getFPV() {
-      return this.$store.getters.getFuulPaymentValue;
     },
 
   },

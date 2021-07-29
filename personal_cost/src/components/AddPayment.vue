@@ -1,4 +1,5 @@
 <template>
+<v-container>
   <div :class="[$style.addPaym]">
     <div :class="[$style.addDate]">
       <input v-model="date" placeholder="date" />
@@ -19,6 +20,7 @@
       <button @click="changePayment">Save +</button>
     </div>
   </div>
+  </v-container>
 </template>
 
 <script>

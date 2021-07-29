@@ -1,7 +1,5 @@
 <template>
   <div class="payments-list">
-    <button @click="toggle">ADD NEW COST +</button>
-
     <div class="display" v-for="(item, idx) in list" :key="item.id">
       {{ item.id }} {{ item }}
       <span class="menuContext" @click="onContextMenuClick(item, idx)"
