@@ -48,7 +48,14 @@ export default new Vuex.Store({
                         { "id": 3, "date": "22.03.2020", "category": "Sport", "value": 450 },
                         { "id": 4, "date": "23.03.2020", "category": "Entertaiment", "value": 969 },
                         { "id": 5, "date": "24.03.2020", "category": "Education", "value": 1500 },
-                        { "id": 6, "date": "25.03.2020", "category": "Food", "value": 200 }
+                        { "id": 6, "date": "25.03.2020", "category": "Food", "value": 200 },
+                        { "id": 7, "date": "20.03.2020", "category": "Food", "value": 169 },
+                        { "id": 8, "date": "21.03.2020", "category": "Navigation", "value": 50 },
+                        { "id": 9, "date": "22.03.2020", "category": "Sport", "value": 450 },
+                        { "id": 10, "date": "23.03.2020", "category": "Entertaiment", "value": 969 },
+                        { "id": 11, "date": "24.03.2020", "category": "Education", "value": 1500 },
+                        { "id": 12, "date": "25.03.2020", "category": "Food", "value": 200 },
+                        
                     ]);
                 },2000);
             }).then(res=>{

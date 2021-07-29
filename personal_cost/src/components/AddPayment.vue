@@ -1,25 +1,23 @@
 <template>
 <v-container>
-  <div :class="[$style.addPaym]">
-    <div :class="[$style.addDate]">
-      <input v-model="date" placeholder="date" />
-      <div :class="[$style.addDate]">
-        <select v-model="selected">
-          <option
-            v-for="(option, idx) in getCategoryList"
-            :key="idx"
-            :value="option"
-          >
-            {{ option }}
-          </option>
-        </select>
-      </div>
-      <input v-model.number="value" type="number" placeholder="value" />
-      <button @click="onClick">Add +</button>
-      <button @click="cancell">Cancell</button>
-      <button @click="changePayment">Save +</button>
-    </div>
-  </div>
+      <v-text-field v-model="date" label="Date" placeholder="Date" />
+        <v-select v-model="selected" label="Category" :items="categoryList" placeholder="Category">
+        </v-select>
+      <v-text-field v-model.number="value" type="number" label="Value" placeholder="Value"/>
+      <v-card-text>
+        <v-row
+        align="center"
+        justify="center"
+      >
+      <v-btn-toggle>
+        <v-btn @click="onClick" plain>Add <v-icon>mdi-plus</v-icon></v-btn>
+        <v-btn @click="cancell" plain>Cancell</v-btn>
+        <v-btn @click="changePayment" plain>Save <v-icon>mdi-plus</v-icon></v-btn>
+      </v-btn-toggle>
+        </v-row>
+      </v-card-text>
+      
+      
   </v-container>
 </template>
 
@@ -87,6 +85,9 @@ export default {
     },
   },
   computed: {
+    categoryList(){
+      return this.$store.getters.getCategoryList
+    },
     getCurrentDate() {
       const today = new Date();
       const d = today.getDate();

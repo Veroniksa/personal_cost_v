@@ -1,12 +1,24 @@
 <template>
-  <div class="payments-list">
-    <div class="display" v-for="(item, idx) in list" :key="item.id">
-      {{ item.id }} {{ item }}
-      <span class="menuContext" @click="onContextMenuClick(item, idx)"
-        >...</span
-      >
-    </div>
-  </div>
+  <v-simple-table>
+    <template v-slot:default>
+      <thead>
+        <tr>
+          <th class="text-left">ID</th>
+          <th class="text-left">Date</th>
+          <th class="text-left">Category</th>
+          <th class="text-left">Value</th>
+        </tr>
+      </thead>
+    <tbody>
+      <tr v-for="item in list" :key="item.id">
+        <td>{{ item.id }}</td>
+        <td>{{ item.date }}</td>
+        <td>{{ (item.category) || (item.selected) }}</td>
+        <td>{{ item.value }}</td>
+      </tr>
+    </tbody>
+  </template>
+</v-simple-table>
 </template>
 
 <script>
@@ -25,23 +37,7 @@ export default {
       clientX: "",
     };
   },
-  methods: {
-    toggle() {
-      this.$modal.show("AddPayment", { header: "Add" });
-    },
-    onContextMenuClick(item, idx) {
-      this.clientY = event.clientY;
-      this.clientX = event.clientX;
-      // debugger
-      this.$modale.showMenu("ModalContextMenu", {
-        header: "testik",
-        id: idx,
-        x: this.clientX,
-        y: this.clientY,
-        item: item,
-      });
-    },
-  },
+  methods: {},
 };
 </script>
 

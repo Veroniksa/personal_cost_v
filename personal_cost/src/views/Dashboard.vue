@@ -11,17 +11,17 @@
       <v-card>
         <AddPayment @addNewPayment="addData" v-if="modalShown"/>
       </v-card>
-      <v-btn @click="modalShown=false">Close</v-btn>
+      <v-btn @click="modalShown=false" plain>Close</v-btn>
     </v-dialog>
       <PaymentsDisplay :list="currentElements" />
-      <Pagination
-        :cur="curPage"
-        :n="n"
-        :length="paymentsList.length"
-        @paginate="onChangePage"
-      />
-            <button @click="showPaymenysForm">Show Paymenys Form</button>
-      <button @click="closePaymenysForm">Close Paymenys Form</button>
+      <template>
+        <div class="text-center" plain>
+          <v-pagination 
+            v-model="curPage"
+            :length="paymentsList.length"
+          ></v-pagination>
+        </div>
+      </template>
     </v-rol>
     <v-rol>
       chart
@@ -32,13 +32,11 @@
 <script>
 import { mapMutations, mapGetters, mapActions } from "vuex";
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
-import Pagination from "../components/Pagination.vue";
 import AddPayment from "../components/AddPayment.vue";
   export default {
       name: "Dashboard",
       components: {
       PaymentsDisplay,
-      Pagination,
       AddPayment
     },
       data() {
@@ -49,7 +47,7 @@ import AddPayment from "../components/AddPayment.vue";
         content: "addPaymentForm",
       },
       curPage: 1,
-      n: 3,
+      n: 5,
       modalShown: false,
       modalSettings: {},
       undateSettings: {},
