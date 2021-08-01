@@ -1,8 +1,8 @@
 <template>
 <v-container>
       <v-text-field v-model="date" label="Date" placeholder="Date" />
-        <v-select v-model="selected" label="Category" :items="categoryList" placeholder="Category">
-        </v-select>
+      <v-select v-model="selected" label="Category" :items="categoryList" placeholder="Category">
+      </v-select>
       <v-text-field v-model.number="value" type="number" label="Value" placeholder="Value"/>
       <v-card-text>
         <v-row

@@ -1,10 +1,10 @@
 <template>
   <div class="content">
     <div>
-      <button @click="edit" class="edit">Edit</button>
+      <button @click="edit" class="edit"><v-icon left>mdi-pencil</v-icon>Edit</button>
     </div>
     <div>
-      <button @click="deleted" class="delete">Delete</button>
+      <button @click="deleted" class="delete"><v-icon left>{{ icons.mdiDelete }}</v-icon>Delete</button>
     </div>
   </div>
 </template>

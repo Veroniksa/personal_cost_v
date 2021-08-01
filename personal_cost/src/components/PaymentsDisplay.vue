@@ -7,6 +7,7 @@
           <th class="text-left">Date</th>
           <th class="text-left">Category</th>
           <th class="text-left">Value</th>
+          <th></th>
         </tr>
       </thead>
     <tbody>
@@ -15,6 +16,7 @@
         <td>{{ item.date }}</td>
         <td>{{ (item.category) || (item.selected) }}</td>
         <td>{{ item.value }}</td>
+        <td><div plain :ripple="false"><v-icon @click.self="onContextMenuClick(item, item.id)">mdi-format-list-bulleted-square</v-icon></div></td>
       </tr>
     </tbody>
   </template>
@@ -37,7 +39,21 @@ export default {
       clientX: "",
     };
   },
-  methods: {},
+  methods: {
+    onContextMenuClick(item, id) {
+      debugger
+      this.clientY = event.clientY;
+      this.clientX = event.clientX;
+      // debugger
+      this.$modale.showMenu("ModalContextMenu", {
+        header: "testik", 
+        id: id,
+        x: this.clientX,
+        y: this.clientY,
+        item: item,
+      });
+    },
+  },
 };
 </script>
 
