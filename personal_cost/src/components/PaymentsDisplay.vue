@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     onContextMenuClick(item, id) {
-      debugger
+      //debugger
       this.clientY = event.clientY;
       this.clientX = event.clientX;
       // debugger
