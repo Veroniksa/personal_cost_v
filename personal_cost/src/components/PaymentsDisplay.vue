@@ -16,7 +16,29 @@
         <td>{{ item.date }}</td>
         <td>{{ (item.category) || (item.selected) }}</td>
         <td>{{ item.value }}</td>
-        <td><div plain :ripple="false"><v-icon @click.self="onContextMenuClick(item, item.id)">mdi-format-list-bulleted-square</v-icon></div></td>
+        <td>
+          <v-dialog v-model="shown" width="500">
+            <template v-slot:activator="{on}">
+              <v-btn plain :ripple="false" 
+              v-on="on">
+                <div >
+                  <v-icon @click.self="onContextMenuClick(item, item.id)">mdi-format-list-bulleted-square
+                  </v-icon>
+                </div>
+              </v-btn>
+            </template>
+            <v-card>
+              <ModalContextMenu 
+              :setting="undateSettings"
+              :undateSettings="undateSettings"
+              v-if="undateSettings"
+             /> <!-- :style="{
+                top: `${this.undateSettings.y + 5}px`,
+                left: `${this.undateSettings.x - 80}px`,
+              }" -->
+            </v-card>
+          </v-dialog>
+          </td>
       </tr>
     </tbody>
   </template>
@@ -24,7 +46,9 @@
 </template>
 
 <script>
+import ModalContextMenu from './ModalContextMenu.vue';
 export default {
+  components: { ModalContextMenu },
   name: "PaymentsDisplay",
   props: {
     settings: Object,
@@ -33,15 +57,18 @@ export default {
       default: () => [],
     },
   },
-  data() {
+        data() {
     return {
+      shown: false,
+      modalSettings: {},
+      undateSettings: {},
       clientY: "",
       clientX: "",
     };
   },
   methods: {
     onContextMenuClick(item, id) {
-      debugger
+      //debugger
       this.clientY = event.clientY;
       this.clientX = event.clientX;
       // debugger

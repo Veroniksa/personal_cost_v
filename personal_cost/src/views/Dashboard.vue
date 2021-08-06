@@ -1,18 +1,31 @@
 <template>
   <v-row>
-    <v-rol>
+    <v-col>
       <div class="text-h4 text-md-h3 mb-8">My personal cost</div>
       <v-dialog v-model="modalShown" width="500">
       <template v-slot:activator="{on}">
-        <v-btn color="teal lighten-2" dark v-on="on">
+        <v-btn color="teal lighten-2" dark v-on="on" >
           ADD NEW COST <v-icon>mdi-plus</v-icon>
           </v-btn>
       </template>
       <v-card>
-        <AddPayment @addNewPayment="addData" v-if="modalShown"/>
+        <AddPayment @addNewPayment="addData" 
+        @close="onClose"
+        v-if="modalSettings"
+        :settings="modalSettings"
+        :undateSettings="undateSettings"/>
       </v-card>
       <v-btn @click="modalShown=false" plain>Close</v-btn>
     </v-dialog>
+<!--     <v-dialog v-model="modalShown" width="500">
+      <template v-slot:activator="{oll}">
+        <v-btn v-on="oll"><div plain :ripple="false"><v-icon @click.self="onContextMenuClick(item, item.id)">mdi-format-list-bulleted-square</v-icon></div></v-btn>
+      </template>
+      <v-card>
+      <PaymentsDisplay
+       />
+      </v-card>
+    </v-dialog> -->
       <PaymentsDisplay :list="currentElements" />
       <template>
         <div class="text-center" plain>
@@ -22,10 +35,10 @@
           ></v-pagination>
         </div>
       </template>
-    </v-rol>
-    <v-rol>
+    </v-col>
+    <v-col>
       chart
-    </v-rol>
+    </v-col>
   </v-row>
 </template>
 
@@ -83,6 +96,32 @@ import AddPayment from "../components/AddPayment.vue";
     closePaymenysForm() {
       this.$modal.hide();
     },
+        onShown(settings) {
+      this.modalSettings = settings;
+      //console.log(settings)
+    },
+        onHide() {
+      this.modalSettings = {};
+    },
+        onItemsShow(items) {
+      this.undateSettings = items;
+    },
+    onItemsHide() {
+      this.undateSettings = {};
+    },
+/*         onContextMenuClick(item, id) {
+      debugger
+      this.clientY = event.clientY;
+      this.clientX = event.clientX;
+      // debugger
+      this.$modale.showMenu("ModalContextMenu", {
+        header: "testik", 
+        id: id,
+        x: this.clientX,
+        y: this.clientY,
+        item: item,
+      });
+    }, */
   },
     computed: {
     ...mapGetters({

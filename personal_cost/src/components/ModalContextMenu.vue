@@ -1,12 +1,12 @@
 <template>
-  <div class="content">
-    <div>
-      <button @click="edit" class="edit"><v-icon left>mdi-pencil</v-icon>Edit</button>
-    </div>
-    <div>
-      <button @click="deleted" class="delete"><v-icon left>{{ icons.mdiDelete }}</v-icon>Delete</button>
-    </div>
-  </div>
+  <v-container class="content">
+    <v-col>
+      <v-btn @click="edit" class="edit"><v-icon left>mdi-pencil</v-icon>Edit</v-btn>
+    </v-col>
+    <v-col>
+      <v-btn @click="deleted" class="delete">Delete</v-btn>
+    </v-col>
+  </v-container>
 </template>
 
 <script>
@@ -21,19 +21,12 @@ export default {
   methods: {
     deleted(){
       this.$store.commit('deletPaymentListData', this.undateSettings.id)
+      //parte erore 
     },
     edit() {
       this.$modal.show("AddPayment", { header: "Add" });
+      
     },
   },
 };
 </script>
-
-<style scoped lang="scss">
-.content {
-  position: absolute;
-  padding: 5px;
-  background: #cafdff;
-  cursor: pointer;
-}
-</style>

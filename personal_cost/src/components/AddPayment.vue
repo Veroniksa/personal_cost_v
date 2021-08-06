@@ -16,8 +16,6 @@
       </v-btn-toggle>
         </v-row>
       </v-card-text>
-      
-      
   </v-container>
 </template>
 
