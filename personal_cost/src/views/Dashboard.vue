@@ -31,12 +31,12 @@
 </template>
 
 <script>
-import { Line } from 'vue-chartjs'
+import {Pie} from 'vue-chartjs'
 import { mapMutations, mapGetters, mapActions } from "vuex";
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
 import AddPayment from "../components/AddPayment.vue";
   export default {
-    extends: Line,
+    extends: Pie,
       name: "Dashboard",
       components: {
       PaymentsDisplay,
@@ -70,11 +70,13 @@ import AddPayment from "../components/AddPayment.vue";
     ...mapActions(["fetchData", "fetchCategory"]),
     addData(data) {
       this.addDataToPaymentsList(data);
-      this.setUp({
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    },
+    setUp(){
+      this.renderChart({
+        labels: ['Food', 'Sport', 'Education', 'Entertaiment', 'Navigation', 'Family'],
         datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            label: 'Chart',
+            data: [738, 900, 3000, 1938, 100, 1468,],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -93,7 +95,7 @@ import AddPayment from "../components/AddPayment.vue";
             ],
             borderWidth: 1
         }]
-    })
+    }); 
     },
     goToThePageNoFound() {
       this.$router.push({ name: "NotFound" });
