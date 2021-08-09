@@ -18,6 +18,6 @@ export default {
       closeMenu() {
         this.EventBus.$emit("closeMenu");
       },
-    }
+    };
   }
-}
+};

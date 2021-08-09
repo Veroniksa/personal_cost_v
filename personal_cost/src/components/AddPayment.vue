@@ -115,10 +115,6 @@ export default {
       } else return "Food";
     },
   },
-  mounted() {
-    this.selected = this.finalCategory;
-    this.value = this.finalValue;
-  },
 };
 </script>
 

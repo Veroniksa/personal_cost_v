@@ -4,7 +4,7 @@
       <v-btn @click="edit" class="edit"><v-icon left>mdi-pencil</v-icon>Edit</v-btn>
     </v-col>
     <v-col>
-      <v-btn @click="deleted" class="delete">Delete</v-btn>
+      <v-btn @click="deleted" class="delete"><v-icon left>mdi-pencil</v-icon>Delete</v-btn>
     </v-col>
   </v-container>
 </template>
@@ -24,9 +24,21 @@ export default {
       //parte erore 
     },
     edit() {
+      this.$modale.closeMenu()
       this.$modal.show("AddPayment", { header: "Add" });
-      
+    },
+    onItemsShow(items) {
+      this.undateSettings = items;
+    },
+    onItemsHide() {
+      this.undateSettings = {};
     },
   },
+  mounted() {
+    this.$modal.EventBus.$on("shown", this.onShown);
+    },
+    beforeDestroy(){
+    this.$modal.EventBus.$off("shown", this.onShown);
+    }
 };
 </script>

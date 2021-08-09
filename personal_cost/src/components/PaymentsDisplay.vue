@@ -21,22 +21,31 @@
             <template v-slot:activator="{on}">
               <v-btn plain :ripple="false" 
               v-on="on">
-                <div >
+                <div>
                   <v-icon @click.self="onContextMenuClick(item, item.id)">mdi-format-list-bulleted-square
                   </v-icon>
                 </div>
               </v-btn>
             </template>
             <v-card>
+        <AddPayment @addNewPayment="addData" 
+        @close="onClose"
+        v-if="modalSettings.name"
+        :settings="modalSettings"
+        :undateSettings="undateSettings"
+        />
+      </v-card>
+            <v-card>
               <ModalContextMenu 
+              v-if="undateSettings"
               :setting="undateSettings"
               :undateSettings="undateSettings"
-              v-if="undateSettings"
              /> <!-- :style="{
                 top: `${this.undateSettings.y + 5}px`,
                 left: `${this.undateSettings.x - 80}px`,
               }" -->
             </v-card>
+            <v-btn @click="shown=false" plain>Close</v-btn>
           </v-dialog>
           </td>
       </tr>
@@ -68,7 +77,6 @@ export default {
   },
   methods: {
     onContextMenuClick(item, id) {
-      //debugger
       this.clientY = event.clientY;
       this.clientX = event.clientX;
       // debugger
@@ -80,17 +88,27 @@ export default {
         item: item,
       });
     },
+    onShown(settings) {
+      this.modalSettings = settings;
+      //console.log(settings)
+    },
+    onHide() {
+      this.modalSettings = {};
+    },
+    onItemsShow(items) {
+      this.undateSettings = items;
+    },
+    onItemsHide() {
+      this.undateSettings = {};
+    },
   },
+  mounted() {
+    this.$modale.showMenu();
+    this.$modale.EventBus.$on("showMenu", this.onItemsShow);
+    },
+  beforeDestroy(){
+    this.$modale.EventBus.$off("showMenu", this.onItemsShow);
+    }
+
 };
 </script>
-
-<style lang="scss">
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 2s;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>

@@ -13,19 +13,11 @@
         @close="onClose"
         v-if="modalSettings"
         :settings="modalSettings"
-        :undateSettings="undateSettings"/>
+        :undateSettings="undateSettings"
+        />
       </v-card>
       <v-btn @click="modalShown=false" plain>Close</v-btn>
     </v-dialog>
-<!--     <v-dialog v-model="modalShown" width="500">
-      <template v-slot:activator="{oll}">
-        <v-btn v-on="oll"><div plain :ripple="false"><v-icon @click.self="onContextMenuClick(item, item.id)">mdi-format-list-bulleted-square</v-icon></div></v-btn>
-      </template>
-      <v-card>
-      <PaymentsDisplay
-       />
-      </v-card>
-    </v-dialog> -->
       <PaymentsDisplay :list="currentElements" />
       <template>
         <div class="text-center" plain>
@@ -141,8 +133,22 @@ import AddPayment from "../components/AddPayment.vue";
     }
   },
     mounted() {
+    this.$modal.show();
+    this.$modal.hide();
+    this.$modale.showMenu();
+    this.$modale.closeMenu();
      const page = this.$route.params.page || 1;
     this.curPage = Number(page);
+    this.$modal.EventBus.$on("shown", this.onShown);
+    this.$modal.EventBus.$on("hide", this.onHide);
+    this.$modale.EventBus.$on("showMenu", this.onItemsShow);
+    this.$modale.EventBus.$on("closeMenu", this.onItemsHide);
+    },
+    beforeDestroy(){
+    this.$modal.EventBus.$off("shown", this.onShown);
+    this.$modal.EventBus.$off("hide", this.onHide);
+    this.$modale.EventBus.$off("showMenu", this.onItemsShow);
+    this.$modale.EventBus.$off("closeMenu", this.onItemsHide);
     }
   }
 </script>
