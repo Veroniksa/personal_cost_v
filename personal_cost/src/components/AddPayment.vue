@@ -29,7 +29,6 @@ export default {
       date: "",
       selected: this.finalCategory,
       value: Number(this.finalValue),
-      // show: false,
     };
   },
   methods: {
@@ -115,34 +114,9 @@ export default {
       } else return "Food";
     },
   },
+/*   mounted() {
+    this.selected = this.finalCategory;
+    this.value = this.finalValue;
+  }, */
 };
 </script>
-
-<style lang="scss" module>
-.addPaym {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 15px;
-  .btnToggle {
-    button {
-      padding: 10px;
-      margin: 20px;
-    }
-  }
-}
-.addDate {
-  display: flex;
-  flex-direction: column;
-
-  select {
-    margin-bottom: 10px;
-  }
-  input:not(:last-child) {
-    margin-bottom: 10px;
-  }
-  button:not(:last-child) {
-    margin-bottom: 10px;
-  }
-}
-</style>

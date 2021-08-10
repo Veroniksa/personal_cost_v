@@ -37,7 +37,7 @@
       </v-card>
             <v-card>
               <ModalContextMenu 
-              v-if="undateSettings"
+              v-if="undateSettings.name"
               :setting="undateSettings"
               :undateSettings="undateSettings"
              /> <!-- :style="{
@@ -109,6 +109,5 @@ export default {
   beforeDestroy(){
     this.$modale.EventBus.$off("showMenu", this.onItemsShow);
     }
-
 };
 </script>
