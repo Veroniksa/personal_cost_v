@@ -25,22 +25,24 @@
     </v-rol>
     <v-rol>
       chart
-      <canvas ref="canvas"></canvas>
+      <Chartjs />
     </v-rol>
   </v-row>
 </template>
 
 <script>
-import { Pie } from "vue-chartjs";
+/* import { Pie } from "vue-chartjs"; */
 import { mapMutations, mapGetters, mapActions } from "vuex";
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
 import AddPayment from "../components/AddPayment.vue";
+import Chartjs from "../components/Chartjs.vue"
 export default {
-  extends: Pie,
+  //extends: Pie,
   name: "Dashboard",
   components: {
     PaymentsDisplay,
     AddPayment,
+    Chartjs
   },
   data() {
     return {
@@ -62,16 +64,11 @@ export default {
       "addDataToPaymentsList",
       "deletPaymentListData",
     ]),
-    ...mapMutations([
-      "setPaymentsListData",
-      "addDataToPaymentsList",
-      "deletPaymentListData",
-    ]),
     ...mapActions(["fetchData", "fetchCategory"]),
     addData(data) {
       this.addDataToPaymentsList(data);
     },
-     setUp() {
+/*      setUp() {
       this.renderChart({
         labels: [
           "Food",
@@ -105,7 +102,7 @@ export default {
           },
         ],
       });
-    }, 
+    },  */
     onShown(settings) {
       this.modalSettings = settings;
       //console.log(settings)
@@ -152,7 +149,7 @@ export default {
     }
   },
     mounted() {
-    this.setUp()
+    //this.setUp()
     this.$modal.show();
     this.$modal.hide();
     this.$modale.showMenu();

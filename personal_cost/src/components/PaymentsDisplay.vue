@@ -10,52 +10,45 @@
           <th></th>
         </tr>
       </thead>
-    <tbody>
-      <tr v-for="item in list" :key="item.id">
-        <td>{{ item.id }}</td>
-        <td>{{ item.date }}</td>
-        <td>{{ (item.category) || (item.selected) }}</td>
-        <td>{{ item.value }}</td>
-        <td>
-          <v-dialog v-model="shown" width="500">
-            <template v-slot:activator="{on}">
-              <v-btn plain :ripple="false" 
-              v-on="on">
-                <div>
-                  <v-icon @click.self="onContextMenuClick(item, item.id)">mdi-format-list-bulleted-square
-                  </v-icon>
-                </div>
-              </v-btn>
+      <tbody>
+        <tr v-for="item in list" :key="item.id">
+          <td>{{ item.id }}</td>
+          <td>{{ item.date }}</td>
+          <td>{{ item.category || item.selected }}</td>
+          <td>{{ item.value }}</td>
+          <td>
+            <template>
+              <div class="text-center">
+                <v-menu transition="scale-transition" origin="center center"
+                style="">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn plain :ripple="false" v-bind="attrs" v-on="on">
+                      <div>
+                        <v-icon @click.self="onContextMenuClick(item, item.id)"
+                          >mdi-format-list-bulleted-square
+                        </v-icon>
+                      </div>
+                    </v-btn>
+                  </template>
+                  <v-list>
+                    <modal-context-menu 
+                      v-if="undateSettings.name"
+                      :setting="undateSettings"
+                      :undateSettings="undateSettings"
+                      />
+                  </v-list>
+                </v-menu>
+              </div>
             </template>
-            <v-card>
-        <AddPayment @addNewPayment="addData" 
-        @close="onClose"
-        v-if="modalSettings.name"
-        :settings="modalSettings"
-        :undateSettings="undateSettings"
-        />
-      </v-card>
-            <v-card>
-              <ModalContextMenu 
-              v-if="undateSettings.name"
-              :setting="undateSettings"
-              :undateSettings="undateSettings"
-             /> <!-- :style="{
-                top: `${this.undateSettings.y + 5}px`,
-                left: `${this.undateSettings.x - 80}px`,
-              }" -->
-            </v-card>
-            <v-btn @click="shown=false" plain>Close</v-btn>
-          </v-dialog>
           </td>
-      </tr>
-    </tbody>
-  </template>
-</v-simple-table>
+        </tr>
+      </tbody>
+    </template>
+  </v-simple-table>
 </template>
 
 <script>
-import ModalContextMenu from './ModalContextMenu.vue';
+import ModalContextMenu from "./ModalContextMenu.vue";
 export default {
   components: { ModalContextMenu },
   name: "PaymentsDisplay",
@@ -66,7 +59,7 @@ export default {
       default: () => [],
     },
   },
-        data() {
+  data() {
     return {
       shown: false,
       modalSettings: {},
@@ -77,14 +70,9 @@ export default {
   },
   methods: {
     onContextMenuClick(item, id) {
-      this.clientY = event.clientY;
-      this.clientX = event.clientX;
-      // debugger
       this.$modale.showMenu("ModalContextMenu", {
-        header: "testik", 
+        header: "testik",
         id: id,
-        x: this.clientX,
-        y: this.clientY,
         item: item,
       });
     },
@@ -105,9 +93,9 @@ export default {
   mounted() {
     this.$modale.showMenu();
     this.$modale.EventBus.$on("showMenu", this.onItemsShow);
-    },
-  beforeDestroy(){
+  },
+  beforeDestroy() {
     this.$modale.EventBus.$off("showMenu", this.onItemsShow);
-    }
+  },
 };
 </script>

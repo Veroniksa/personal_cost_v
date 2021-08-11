@@ -109,14 +109,14 @@ export default {
     finalCategory() {
       if (this.getCategoryParamFromRoute) {
         return this.getCategoryParamFromRoute;
-      } else if (this.undateSettings.name) {
+      } else if (this.undateSettings) {
         return this.undateSettings.item.category;
       } else return "Food";
     },
   },
-/*   mounted() {
-    this.selected = this.finalCategory;
+   mounted() {
+    this.selected  = this.finalCategory;
     this.value = this.finalValue;
-  }, */
+  }, 
 };
 </script>
