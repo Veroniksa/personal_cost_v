@@ -28,7 +28,7 @@ export default {
       //parte erore
     },
     edit() {
-      this.$modal.show("AddPayment", { header: "Add" });
+      this.$modal.show("AddPayment", { header: "Add", modalShown: true });
     },
     onItemsShow(items) {
       this.undateSettings = items;
@@ -36,12 +36,6 @@ export default {
     onItemsHide() {
       this.undateSettings = {};
     },
-  },
-  mounted() {
-    this.$modal.EventBus.$on("shown", this.onShown);
-  },
-  beforeDestroy() {
-    this.$modal.EventBus.$off("shown", this.onShown);
   },
 };
 </script>

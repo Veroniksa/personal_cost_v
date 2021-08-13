@@ -8,8 +8,16 @@
             ADD NEW COST <v-icon>mdi-plus</v-icon>
           </v-btn>
         </template>
+         <v-card>
+          <AddPayment @addNewPayment="addData" v-if="modalShown && !undateSettings.name" 
+          :setting="modalSettings" />
+        </v-card> 
         <v-card>
-          <AddPayment @addNewPayment="addData" v-if="modalShown" />
+          <AddPayment @addNewPayment="addData"
+          v-if="undateSettings.name && modalShown"
+          :setting="undateSettings"
+          :undateSettings="undateSettings" 
+          @activator = "modalShown = true" />
         </v-card>
         <v-btn @click="modalShown = false" plain>Close</v-btn>
       </v-dialog>
@@ -25,19 +33,18 @@
     </v-rol>
     <v-rol>
       chart
+      <canvas ref="canvas"></canvas>
       <Chartjs />
     </v-rol>
   </v-row>
 </template>
 
 <script>
-/* import { Pie } from "vue-chartjs"; */
 import { mapMutations, mapGetters, mapActions } from "vuex";
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
 import AddPayment from "../components/AddPayment.vue";
 import Chartjs from "../components/Chartjs.vue"
 export default {
-  //extends: Pie,
   name: "Dashboard",
   components: {
     PaymentsDisplay,
@@ -68,41 +75,6 @@ export default {
     addData(data) {
       this.addDataToPaymentsList(data);
     },
-/*      setUp() {
-      this.renderChart({
-        labels: [
-          "Food",
-          "Sport",
-          "Education",
-          "Entertaiment",
-          "Navigation",
-          "Family",
-        ],
-        datasets: [
-          {
-            label: "Chart",
-            data: [738, 900, 3000, 1938, 100, 1468],
-            backgroundColor: [
-              "rgba(255, 99, 132, 0.2)",
-              "rgba(54, 162, 235, 0.2)",
-              "rgba(255, 206, 86, 0.2)",
-              "rgba(75, 192, 192, 0.2)",
-              "rgba(153, 102, 255, 0.2)",
-              "rgba(255, 159, 64, 0.2)",
-            ],
-            borderColor: [
-              "rgba(255, 99, 132, 1)",
-              "rgba(54, 162, 235, 1)",
-              "rgba(255, 206, 86, 1)",
-              "rgba(75, 192, 192, 1)",
-              "rgba(153, 102, 255, 1)",
-              "rgba(255, 159, 64, 1)",
-            ],
-            borderWidth: 1,
-          },
-        ],
-      });
-    },  */
     onShown(settings) {
       this.modalSettings = settings;
       //console.log(settings)
@@ -149,7 +121,6 @@ export default {
     }
   },
     mounted() {
-    //this.setUp()
     this.$modal.show();
     this.$modal.hide();
     this.$modale.showMenu();

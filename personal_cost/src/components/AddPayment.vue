@@ -12,7 +12,9 @@
       <v-btn-toggle>
         <v-btn @click="onClick" plain>Add <v-icon>mdi-plus</v-icon></v-btn>
         <v-btn @click="cancell" plain>Cancell</v-btn>
-        <v-btn @click="changePayment" plain>Save <v-icon>mdi-plus</v-icon></v-btn>
+        <v-btn @click="changePayment" plain>Save <v-icon right>
+          mdi-wrench
+        </v-icon><v-icon></v-icon></v-btn>
       </v-btn-toggle>
         </v-row>
       </v-card-text>
@@ -39,11 +41,11 @@ export default {
       });
     },
     cancell() {
-      (this.date = ""), (this.category = ""), (this.value = null);
+      (this.date = ""), (this.selected = ""), (this.value = null);
     },
     changePayment() {
       const { selected, value } = this;
-      const date = this.date;
+      const date = this.undateSettings.item.date;
       
       const id = this.undateSettings.item.id;
       const data = {
@@ -68,6 +70,7 @@ export default {
 
       //Вызов события, название события и аргументы
       this.$emit("addNewPayment", data);
+      this.cancell();
     },
     ...mapActions(["loadCategories"]),
     mounted() {

@@ -10,11 +10,8 @@ export default new Vuex.Store({
     },
 
     mutations: {
-/*         deletePayment(state, payload) {
-            state.paymentsList.splice(payload, 1);
-        }, */
         changePayment(state, payload, ) {
-            state.paymentsList.splice(payload.idx, 1, payload.item);
+            state.paymentsList.splice(payload.idx-1, 1, payload.item);
         }, 
         deletPaymentListData(state, payload){
             state.paymentsList.splice(payload, 1);
@@ -34,14 +31,6 @@ export default new Vuex.Store({
         fetchData({commit}){
             return new Promise((resolve)=>{
                 setTimeout(()=>{
-                    //const items = [];
-                    /* for(let i= 1; i< 50; i++){
-                        items.push({
-                            date: "23.12.2020",
-                            category: "Sport",
-                            value: i
-                        }); 
-                    }*/
                     resolve([
                         { "id": 1, "date": "20.03.2020", "category": "Food", "value": 169 },
                         { "id": 2, "date": "21.03.2020", "category": "Navigation", "value": 50 },
